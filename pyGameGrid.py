@@ -13,7 +13,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
 # --- Grid Settings ---
-rows, cols = 20, 20
+rows, cols = 100, 100
 cell_w = WIDTH / cols
 cell_h = HEIGHT / rows
 
@@ -23,7 +23,6 @@ eg.gridPoint.initializeGrid(rows, cols)
 # --- Velocity Field (vx, vy) (kept for fast drawing) ---
 vx = np.zeros((rows, cols), dtype=np.float32)
 vy = np.zeros((rows, cols), dtype=np.float32)
-
 
 def velocityToColor(vx_val, vy_val):
     """
