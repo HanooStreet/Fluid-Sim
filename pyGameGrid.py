@@ -5,6 +5,7 @@ import math
 import colorsys
 import eulerianGrid as eg
 import sys
+import time
 
 # --- Pygame Setup ---
 pygame.init()
@@ -21,8 +22,14 @@ cell_h = HEIGHT / rows
 eg.gridPoint.initializeGrid(rows, cols)
 
 # --- Velocity Field (vx, vy) (kept for fast drawing) ---
+# IMPORTANT vx is y and vy is x (shoutout I setup the grid sideways)
 vx = np.zeros((rows, cols), dtype=np.float32)
 vy = np.zeros((rows, cols), dtype=np.float32)
+
+def somethingToColor(x):
+    x = max(-60, min(60, x))
+    r = int(255 / (1 + math.exp(x/30)))
+    return r,r,r
 
 def velocityToColor(vx_val, vy_val):
     """
@@ -38,14 +45,14 @@ def velocityToColor(vx_val, vy_val):
 def drawVelocityField():
     for i in range(rows):
         for j in range(cols):
-            color = velocityToColor(vx[i, j], vy[i, j])
+            #color = velocityToColor(vx[i, j], vy[i, j])
+            color = somethingToColor(vx[i, j])
             rect = pygame.Rect(int(j * cell_w), int(i * cell_h), int(cell_w) + 1, int(cell_h) + 1)
             pygame.draw.rect(screen, color, rect)
 
 def updateVelocityField():
     # try to advance the physics in the eulerianGrid if available
     eg.gridPoint.nextFrame()
-    
 
     # copy velocities from the class-level grid into local arrays for drawing
     
@@ -62,13 +69,10 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    print("frame")
-    print(eg.gridPoint.grid[5][5].velocity)
-    print(eg.gridPoint.grid[5][5].density)
     updateVelocityField()
     drawVelocityField()
     pygame.display.flip()
-    clock.tick(60)
+    time.sleep(0.3)
     #sys.quit
 
 
