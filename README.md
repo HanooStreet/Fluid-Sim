@@ -1,1 +1,1 @@
-Simulates fluid movement by numerically solves the Navier Stokes equations using an Eulerian-Lagrangian hybrid method
+Simulates fluid movement by numerically solving the Navier Stokes equations using an Eulerian-Lagrangian hybrid method
